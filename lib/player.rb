@@ -11,9 +11,9 @@ class Player
   end
 
   def get_marker
-    @marker = disp_and_res("What would you like your marker to be (ie 'X')? Please don't pick 'O' because that's the computer.")
-    until @marker != 'O'
-      @marker = disp_and_res("What would you like your marker to be (ie 'X')? Please don't pick 'O' because that's the computer.")
+    @marker = disp_and_res("What would you like your marker to be (ie 'X')?")
+    until @marker.length == 1
+      @marker = disp_and_res("What would you like your marker to be (ie 'X')? It can only be one character long")
     end
   end
 
