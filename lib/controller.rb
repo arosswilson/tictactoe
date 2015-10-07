@@ -19,6 +19,7 @@ class Controller
     while keep_playing
       new_board?
       game_loop(board, player, computer)
+      final_board(board)
       display(@board.find_winner(player, computer))
       play_again?
     end
@@ -33,6 +34,11 @@ class Controller
     player.get_marker
     computer.update_op_mrkr(player.marker)
     computer.update_mrkr
+  end
+
+  def final_board(board)
+    clear
+    show_board(board)
   end
 
   def move(board, player)
