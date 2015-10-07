@@ -16,8 +16,8 @@ class Computer
 
   def update_mrkr
     @marker = disp_and_res("what would you like the computer marker to be?")
-    until @marker != opponent_marker
-      @marker = disp_and_res("you can't choose the same marker as your own. your marker is #{opponent_marker}")
+    until @marker != opponent_marker && @marker.length == 1
+      @marker = disp_and_res("you can't choose the same marker as your own. your marker is #{opponent_marker}. Your selection must only be one character")
     end
   end
 
