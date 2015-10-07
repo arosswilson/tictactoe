@@ -26,3 +26,4 @@
   2. Refactoring. I tried to make this pretty DRY, but there is alway room for improvement.
   3. Creating a run.rb. I think it would make the most sense to have a run.rb file that requires all of my files and kicks off game so you could do 'ruby run.rb' as opposed 'ruby controller.rb'
   4. Update the game so it randomly picks who goes first.
+  5. Update the controller to show the final board before showing the winner.
