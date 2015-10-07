@@ -3,8 +3,24 @@ module View
     puts message
   end
 
-  def get_move
-    move = gets.chomp
+  def get_response
+    res = gets.chomp
   end
 
+  def disp_and_res(message)
+    display(message)
+    return get_response
+  end
+
+  def welcome
+    puts "Welcome to Tic Tac Toe!"
+  end
+
+  def clear
+    puts "\e[H\e[2J"
+  end
+
+  def show_board(board)
+    board.to_s
+  end
 end

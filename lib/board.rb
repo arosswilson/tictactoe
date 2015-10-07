@@ -1,4 +1,3 @@
-require 'pry'
 class Board
   attr_accessor :board
   attr_reader :board_size
@@ -13,6 +12,10 @@ class Board
       row.each.with_index {|space, r_num| possible_moves << "#{c_num.to_s},#{r_num.to_s}" if space == "_"}
     end
     possible_moves
+  end
+
+  def self.newboard(board)
+    return Board.new({board_size: board.board_size})
   end
 
   def move(marker, position)
@@ -32,19 +35,39 @@ class Board
   end
 
   def to_s
-    binding.pry
     display = " " +('0'...(board_size.to_s)).to_a.join(' ') + "\n"
     board.each.with_index do |row, i|
-      display += ((i+1).to_s + row.join("|")+ "\n")
+      display += (i.to_s + row.join("|")+ "\n")
     end
     puts display
   end
 
-  def row_check(board = @board)
-    board.each do |row|
-      return row[0] if row.uniq.length == 1 && !(row.include?('_'))
+  def game_over?
+    game_over = nil
+    game_over ||= row_check(board)
+    game_over ||= col_check
+    game_over ||= diag_check
+    game_over ||= tie?
+    game_over
+  end
+
+  def find_winner(player, computer)
+    marker = game_over? if game_over?
+    if marker == computer.marker
+      return "Winner: Computer"
+    elsif marker == 'tie'
+      return 'tie'
+    elsif marker == player.marker
+      return "Winner: #{player.name}"
     end
-    nil
+  end
+
+  private
+
+  def sanitize_position(position)
+    pos_array = position.split(',')
+    pos_array.map!{|cord| cord.to_i}
+    return pos_array
   end
 
   def col_check
@@ -62,24 +85,11 @@ class Board
     return "tie" if !(board.flatten.include?('_'))
   end
 
-  def game_over?
-    game_over = nil
-    game_over ||= row_check(board)
-    game_over ||= col_check
-    game_over ||= diag_check
-    game_over ||= tie?
-    game_over
-  end
-
-  def sanitize_position(position)
-    pos_array = position.split(',')
-    pos_array.map!{|cord| cord.to_i}
-    return pos_array
+  def row_check(board = @board)
+    board.each do |row|
+      return row[0] if row.uniq.length == 1 && !(row.include?('_'))
+    end
+    nil
   end
 
 end
-
-b = Board.new({board_size: 3, board: [["X","_","_"],["_","X","_"],["_","_","X"]]})
-p b.game_over?
-
-
